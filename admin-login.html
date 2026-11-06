@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | CampusCourse</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="admin-login-page">
+
+    <!-- Navigation -->
+    <header class="admin-navbar">
+        <a href="/index.html" class="admin-logo">
+            <span class="admin-logo-icon">C</span>
+            <span>
+                CampusCourse
+                <small>COURSE MANAGEMENT PORTAL</small>
+            </span>
+        </a>
+
+        <nav class="admin-nav">
+            <a href="/index.html">Home</a>
+            <a href="/courses.html">View Courses</a>
+            <a href="/register.html">Student Registration</a>
+        </nav>
+    </header>
+
+    <!-- Login Background -->
+    <main class="admin-hero">
+        <div class="admin-background-overlay"></div>
+
+        <div class="admin-login-layout">
+
+            <!-- Left Information -->
+            <section class="admin-welcome">
+                <span class="admin-label">ADMINISTRATION PORTAL</span>
+
+                <h1>Manage courses.<br>Support student success.</h1>
+
+                <p>
+                    Access the course management portal to maintain
+                    course information and manage academic offerings.
+                </p>
+
+                <div class="admin-feature-list">
+                    <div class="admin-feature">
+                        <span>✓</span>
+                        <p>Manage college course details</p>
+                    </div>
+
+                    <div class="admin-feature">
+                        <span>✓</span>
+                        <p>Update academic information</p>
+                    </div>
+
+                    <div class="admin-feature">
+                        <span>✓</span>
+                        <p>Review student registrations</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Login Card -->
+            <section class="admin-login-card">
+
+                <div class="admin-card-icon">♙</div>
+
+                <p class="admin-card-kicker">WELCOME BACK</p>
+                <h2>Administrator Login</h2>
+
+                <p class="admin-card-description">
+                    Sign in with your administrator credentials.
+                </p>
+
+                <div id="loginMessage"
+                     class="admin-login-message"
+                     role="status"
+                     aria-live="polite"></div>
+
+                <form id="adminLoginForm">
+
+                    <div class="admin-form-group">
+                        <label for="username">Username</label>
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Enter your username"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label for="password">Password</label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="admin-login-button">
+                        Sign In <span>→</span>
+                    </button>
+
+                </form>
+
+                <div class="admin-security-note">
+                    <span>🔒</span>
+                    <p>Administrator access only</p>
+                </div>
+
+                <div class="admin-back-link">
+                    <a href="/index.html">← Back to Home</a>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="admin-footer">
+        <p>© 2026 CampusCourse | Student Course Registration System</p>
+    </footer>
+
+    <script>
+        const loginForm = document.getElementById("adminLoginForm");
+        const loginMessage = document.getElementById("loginMessage");
+
+        loginForm.addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const username =
+                document.getElementById("username").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            if (!username || !password) {
+                loginMessage.textContent =
+                    "Please enter your username and password.";
+                loginMessage.className =
+                    "admin-login-message error";
+                return;
+            }
+
+            /*
+              The app.js code previously created does not yet contain
+              an authenticated admin-login API.
+
+              Do not redirect to the admin dashboard until the server
+              verifies the credentials.
+            */
+
+            loginMessage.textContent =
+                "The login form is ready, but administrator authentication must be connected to the server.";
+
+            loginMessage.className =
+                "admin-login-message error";
+        });
+    </script>
+
+</body>
+</html>

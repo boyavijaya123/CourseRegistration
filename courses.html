@@ -1,0 +1,615 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Courses | CampusCourse</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7f5;
+            color: #243b32;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .navbar {
+            min-height: 85px;
+            padding: 18px 6%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            flex-wrap: wrap;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 23px;
+            font-weight: bold;
+            color: #14583f;
+        }
+
+        .brand-icon {
+            background: #14583f;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #344b40;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #12805a;
+        }
+
+        .hero {
+            min-height: 390px;
+            padding: 65px 8%;
+            display: flex;
+            align-items: center;
+            background-color: #143c2d;
+            background-image:
+                linear-gradient(90deg,
+                rgba(8, 35, 25, 0.90),
+                rgba(8, 35, 25, 0.35)),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .hero-content {
+            max-width: 720px;
+            color: white;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 9px 15px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 58px);
+            line-height: 1.15;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .hero p {
+            max-width: 600px;
+            font-size: 17px;
+            line-height: 1.8;
+            color: #f0f5f1;
+            margin-bottom: 28px;
+        }
+
+        .hero-button {
+            display: inline-block;
+            background: #13845b;
+            color: white;
+            padding: 15px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .hero-button:hover {
+            background: #0d6746;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            width: 88%;
+            max-width: 1250px;
+            margin: 55px auto;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .section-heading span {
+            display: block;
+            color: #16805a;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(27px, 3vw, 38px);
+            margin-bottom: 12px;
+            color: #173f2f;
+        }
+
+        .section-heading p {
+            color: #718078;
+            line-height: 1.7;
+        }
+
+        .filters {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 15px;
+            box-shadow: 0 5px 20px rgba(20, 60, 40, 0.06);
+            margin-bottom: 30px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            min-width: 0;
+            padding: 13px 14px;
+            border: 1px solid #d8e2dc;
+            border-radius: 8px;
+            background: #fff;
+            color: #294438;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .filters input:focus,
+        .filters select:focus {
+            border-color: #16805a;
+            box-shadow: 0 0 0 3px rgba(22, 128, 90, 0.1);
+        }
+
+        .course-count {
+            color: #718078;
+            margin-bottom: 20px;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #e4ebe6;
+            box-shadow: 0 5px 18px rgba(20, 60, 40, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(20, 60, 40, 0.12);
+        }
+
+        .course-image {
+            height: 175px;
+            width: 100%;
+            object-fit: cover;
+            display: block;
+            background: #dce8df;
+        }
+
+        .course-body {
+            padding: 22px;
+        }
+
+        .course-tag {
+            display: inline-block;
+            padding: 7px 10px;
+            background: #e7f4ec;
+            color: #14724f;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .course-body h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #203e30;
+        }
+
+        .course-code {
+            color: #77847c;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .course-details {
+            border-top: 1px solid #edf1ee;
+            padding-top: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .detail-label {
+            display: block;
+            font-size: 12px;
+            color: #859188;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #344d40;
+            overflow-wrap: anywhere;
+        }
+
+        .register-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: #14583f;
+            color: white;
+            padding: 13px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .register-button:hover {
+            background: #0d704c;
+        }
+
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 45px 20px;
+            background: white;
+            border-radius: 12px;
+            color: #718078;
+            line-height: 1.8;
+        }
+
+        .empty-state h3 {
+            color: #254736;
+            margin-bottom: 8px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 35px;
+            color: #718078;
+        }
+
+        .footer {
+            background: #123c2c;
+            color: #e4eee8;
+            text-align: center;
+            padding: 28px 15px;
+            line-height: 1.8;
+            margin-top: 65px;
+        }
+
+        @media (max-width: 900px) {
+            .course-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .filters {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .filters input {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 18px 5%;
+            }
+
+            .brand {
+                font-size: 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .hero {
+                min-height: 350px;
+                padding: 45px 6%;
+            }
+
+            .container {
+                width: 90%;
+                margin: 38px auto;
+            }
+
+            .filters,
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters input {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="/index.html" class="brand">
+            <span class="brand-icon">C</span>
+            <span>CampusCourse</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="/index.html">Home</a>
+            <a href="/courses.html">View Courses</a>
+            <a href="/register.html">Student Registration</a>
+            <a href="/admin-login.html">Admin Login</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="eyebrow">LEARN · GROW · ACHIEVE</span>
+            <h1>Available College Courses</h1>
+            <p>
+                Explore your interests, discover academic opportunities,
+                and choose the courses that shape your future.
+            </p>
+            <a href="#course-catalogue" class="hero-button">
+                Explore Courses ↓
+            </a>
+        </div>
+    </section>
+
+    <main class="container" id="course-catalogue">
+        <div class="section-heading">
+            <span>COURSE CATALOGUE</span>
+            <h2>Explore College Courses</h2>
+            <p>
+                Find course details by name, code, department, or semester.
+            </p>
+        </div>
+
+        <section class="filters">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search by course name or code..."
+                aria-label="Search courses"
+            >
+
+            <select id="departmentFilter" aria-label="Filter by department">
+                <option value="">All Departments</option>
+                <option value="CSE">Computer Science (CSE)</option>
+                <option value="IT">Information Technology (IT)</option>
+                <option value="ECE">Electronics (ECE)</option>
+                <option value="EEE">Electrical (EEE)</option>
+                <option value="MECH">Mechanical (MECH)</option>
+                <option value="CIVIL">Civil Engineering</option>
+            </select>
+
+            <select id="semesterFilter" aria-label="Filter by semester">
+                <option value="">All Semesters</option>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+            </select>
+        </section>
+
+        <p class="course-count" id="courseCount">
+            Loading available courses...
+        </p>
+
+        <section class="course-grid" id="courseGrid">
+            <p class="loading">Loading courses from the database...</p>
+        </section>
+
+        <section class="empty-state" id="emptyState">
+            <h3>No courses found</h3>
+            <p>Try changing your search or filter selections.</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p><strong>CampusCourse</strong> — Student Course Registration System</p>
+        <p>Discover your interests. Build your future.</p>
+    </footer>
+
+    <script>
+        const courseGrid = document.getElementById("courseGrid");
+        const searchInput = document.getElementById("searchInput");
+        const departmentFilter = document.getElementById("departmentFilter");
+        const semesterFilter = document.getElementById("semesterFilter");
+        const courseCount = document.getElementById("courseCount");
+        const emptyState = document.getElementById("emptyState");
+
+        let allCourses = [];
+
+        // Images used as course-card illustrations.
+        const courseImages = [
+            "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1518186233392-c232efbf2373?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80"
+        ];
+
+        function getField(course, possibleNames) {
+            for (const name of possibleNames) {
+                if (course[name] !== undefined && course[name] !== null) {
+                    return course[name];
+                }
+            }
+            return "";
+        }
+
+        function escapeHTML(value) {
+            return String(value).replace(/[&<>"']/g, character => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            })[character]);
+        }
+
+        function renderCourses() {
+            const search = searchInput.value.trim().toLowerCase();
+            const department = departmentFilter.value.toLowerCase();
+            const semester = semesterFilter.value;
+
+            const filtered = allCourses.filter(course => {
+                const id = getField(course, ["course_id", "id"]);
+                const code = getField(course, ["course_code", "courseCode", "code"]);
+                const name = getField(course, ["course_name", "courseName", "name"]);
+                const dept = getField(course, ["department", "dept"]);
+                const sem = getField(course, ["semester", "semister", "sem"]);
+
+                const searchable = `${id} ${code} ${name} ${dept}`.toLowerCase();
+
+                return searchable.includes(search) &&
+                    (!department || String(dept).toLowerCase() === department) &&
+                    (!semester || String(sem) === semester);
+            });
+
+            courseCount.textContent =
+                `${filtered.length} course${filtered.length === 1 ? "" : "s"} available`;
+
+            courseGrid.innerHTML = "";
+            emptyState.style.display = filtered.length ? "none" : "block";
+
+            filtered.forEach((course, index) => {
+                const id = getField(course, ["course_id", "id"]);
+                const code = getField(course, ["course_code", "courseCode", "code"]);
+                const name = getField(course, ["course_name", "courseName", "name"]);
+                const credits = getField(course, ["course_credits", "credits", "courseCredits"]);
+                const dept = getField(course, ["department", "dept"]);
+                const sem = getField(course, ["semester", "semister", "sem"]);
+
+                const card = document.createElement("article");
+                card.className = "course-card";
+
+                card.innerHTML = `
+                    <img
+                        class="course-image"
+                        src="${courseImages[index % courseImages.length]}"
+                        alt="College learning and course study"
+                        loading="lazy"
+                    >
+                    <div class="course-body">
+                        <span class="course-tag">${escapeHTML(dept || "College Course")}</span>
+                        <h3>${escapeHTML(name || "Untitled Course")}</h3>
+                        <p class="course-code">Course Code: ${escapeHTML(code || "N/A")}</p>
+                        <div class="course-details">
+                            <div>
+                                <span class="detail-label">Course ID</span>
+                                <span class="detail-value">${escapeHTML(id || "N/A")}</span>
+                            </div>
+                            <div>
+                                <span class="detail-label">Credits</span>
+                                <span class="detail-value">${escapeHTML(credits || "N/A")}</span>
+                            </div>
+                            <div>
+                                <span class="detail-label">Department</span>
+                                <span class="detail-value">${escapeHTML(dept || "N/A")}</span>
+                            </div>
+                            <div>
+                                <span class="detail-label">Semester</span>
+                                <span class="detail-value">${escapeHTML(sem || "N/A")}</span>
+                            </div>
+                        </div>
+                        <a class="register-button" href="/register.html?course_id=${encodeURIComponent(id)}">
+                            Register for this Course →
+                        </a>
+                    </div>
+                `;
+
+                courseGrid.appendChild(card);
+            });
+        }
+
+        async function loadCourses() {
+            try {
+                const response = await fetch("/api/courses");
+
+                if (!response.ok) {
+                    throw new Error("Server returned " + response.status);
+                }
+
+                const courses = await response.json();
+
+                if (!Array.isArray(courses)) {
+                    throw new Error("The API response is not a course list.");
+                }
+
+                allCourses = courses;
+                renderCourses();
+            } catch (error) {
+                console.error("Error loading courses:", error);
+
+                courseCount.textContent = "Courses could not be loaded.";
+                courseGrid.innerHTML = `
+                    <div style="grid-column:1/-1;background:white;padding:25px;border-radius:12px;line-height:1.8">
+                        <h3>Unable to load courses</h3>
+                        <p>Check that your Express server is running and that
+                        <code>GET /api/courses</code> returns course data.</p>
+                        <p>Then refresh this page.</p>
+                    </div>
+                `;
+            }
+        }
+
+        searchInput.addEventListener("input", renderCourses);
+        departmentFilter.addEventListener("change", renderCourses);
+        semesterFilter.addEventListener("change", renderCourses);
+
+        loadCourses();
+    </script>
+
+</body>
+</html>

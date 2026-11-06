@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Course | CampusCourse</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f3f7f4;
+            color: #203b2e;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .navbar {
+            background: white;
+            min-height: 82px;
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #14583f;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .brand-icon {
+            background: #14583f;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            color: #344b40;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #13845b;
+        }
+
+        .hero {
+            min-height: 280px;
+            padding: 55px 8%;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(90deg, rgba(8,39,27,.90), rgba(8,39,27,.40)),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85");
+            background-position: center;
+            background-size: cover;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 750px;
+        }
+
+        .hero-label {
+            display: inline-block;
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.3);
+            border-radius: 25px;
+            padding: 8px 14px;
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 4vw, 48px);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #edf4ef;
+        }
+
+        .page-container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 45px auto 65px;
+        }
+
+        .page-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-heading span {
+            display: block;
+            color: #13845b;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .page-heading h2 {
+            font-size: 32px;
+            margin-bottom: 12px;
+            color: #173f2f;
+        }
+
+        .page-heading p {
+            color: #718078;
+            line-height: 1.7;
+        }
+
+        .form-layout {
+            display: grid;
+            grid-template-columns: .9fr 1.4fr;
+            gap: 28px;
+            align-items: stretch;
+        }
+
+        .info-card {
+            min-height: 400px;
+            padding: 32px;
+            border-radius: 16px;
+            color: white;
+            background:
+                linear-gradient(180deg, rgba(13,61,42,.30), rgba(8,37,26,.92)),
+                url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85");
+            background-position: center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .info-card h3 {
+            font-size: 27px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .info-card p {
+            line-height: 1.8;
+            color: #edf4ef;
+        }
+
+        .form-card {
+            background: white;
+            padding: 32px;
+            border: 1px solid #e2ebe4;
+            border-radius: 16px;
+            box-shadow: 0 8px 28px rgba(20,60,40,.07);
+        }
+
+        .form-card h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #173f2f;
+        }
+
+        .form-description {
+            color: #78867d;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #344b40;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d7e2da;
+            border-radius: 8px;
+            background: #fbfdfb;
+            color: #243b32;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #16805a;
+            box-shadow: 0 0 0 3px rgba(22,128,90,.10);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .submit-button {
+            width: 100%;
+            border: none;
+            background: #14583f;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background .2s;
+            margin-top: 5px;
+        }
+
+        .submit-button:hover {
+            background: #0c704b;
+        }
+
+        .submit-button:disabled {
+            opacity: .65;
+            cursor: wait;
+        }
+
+        .message {
+            display: none;
+            margin-top: 18px;
+            padding: 13px;
+            border-radius: 8px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .success {
+            display: block;
+            background: #e6f5eb;
+            color: #17633e;
+        }
+
+        .error {
+            display: block;
+            background: #fff0ee;
+            color: #a42b24;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 22px;
+            color: #176b4a;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            background: #123c2c;
+            color: #e4eee8;
+            text-align: center;
+            padding: 28px 15px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 800px) {
+            .form-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .info-card {
+                min-height: 260px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .navbar {
+                padding: 18px 5%;
+            }
+
+            .nav-links {
+                gap: 14px;
+            }
+
+            .page-container {
+                margin-top: 30px;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .page-heading h2 {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/index.html" class="brand">
+        <span class="brand-icon">C</span>
+        <span>CampusCourse</span>
+    </a>
+
+    <nav class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/courses.html">View Courses</a>
+        <a href="/add-course.html">Add Course</a>
+        <a href="/manage-courses.html">Manage Courses</a>
+        <a href="/register.html">Register</a>
+        <a href="/admin-login.html">Admin Login</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-label">COURSE ADMINISTRATION</span>
+        <h1>Add a New Course</h1>
+        <p>
+            Expand the college course catalogue by adding new subjects,
+            assigning credits, and selecting the appropriate department
+            and semester.
+        </p>
+    </div>
+</section>
+
+<main class="page-container">
+
+    <div class="page-heading">
+        <span>COURSE MANAGEMENT</span>
+        <h2>Create Course Details</h2>
+        <p>Enter the course information below and submit it to save the course.</p>
+    </div>
+
+    <div class="form-layout">
+
+        <aside class="info-card">
+            <h3>Build Better Learning Opportunities</h3>
+            <p>
+                Keep course information organised so students can explore
+                available subjects and select courses that support their
+                academic goals.
+            </p>
+        </aside>
+
+        <section class="form-card">
+            <h3>Course Information</h3>
+
+            <p class="form-description">
+                Fill in all the required fields marked below.
+            </p>
+
+            <form id="addCourseForm">
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="course_code">Course Code *</label>
+                        <input
+                            type="text"
+                            id="course_code"
+                            name="course_code"
+                            placeholder="e.g. CSE301"
+                            maxlength="20"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course_name">Course Name *</label>
+                        <input
+                            type="text"
+                            id="course_name"
+                            name="course_name"
+                            placeholder="e.g. Python Programming"
+                            maxlength="120"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="course_credits">Course Credits *</label>
+                        <input
+                            type="number"
+                            id="course_credits"
+                            name="course_credits"
+                            min="1"
+                            max="10"
+                            step="1"
+                            placeholder="e.g. 4"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="department">Department *</label>
+                        <select id="department" name="department" required>
+                            <option value="">Select department</option>
+                            <option value="CSE">Computer Science (CSE)</option>
+                            <option value="IT">Information Technology (IT)</option>
+                            <option value="ECE">Electronics (ECE)</option>
+                            <option value="EEE">Electrical (EEE)</option>
+                            <option value="MECH">Mechanical (MECH)</option>
+                            <option value="CIVIL">Civil Engineering</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="semester">Semester *</label>
+                    <select id="semester" name="semester" required>
+                        <option value="">Select semester</option>
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                        <option value="7">Semester 7</option>
+                        <option value="8">Semester 8</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-button" id="submitButton">
+                    + Add Course
+                </button>
+
+                <div id="message" class="message" role="status" aria-live="polite"></div>
+
+            </form>
+
+            <a href="/courses.html" class="back-link">
+                ← Back to Available Courses
+            </a>
+        </section>
+
+    </div>
+</main>
+
+<footer class="footer">
+    <p><strong>CampusCourse</strong> — Student Course Registration System</p>
+    <p>Organising courses. Supporting student success.</p>
+</footer>
+
+<script>
+    const form = document.getElementById("addCourseForm");
+    const message = document.getElementById("message");
+    const submitButton = document.getElementById("submitButton");
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        message.className = "message";
+        message.textContent = "";
+        message.style.display = "none";
+
+        const course = {
+            course_code: document.getElementById("course_code").value.trim(),
+            course_name: document.getElementById("course_name").value.trim(),
+
+            // Must match the server.js field name
+            course_credits: Number(
+                document.getElementById("course_credits").value
+            ),
+
+            department: document.getElementById("department").value,
+            semester: Number(document.getElementById("semester").value)
+        };
+
+        if (
+            !course.course_code ||
+            !course.course_name ||
+            !course.department ||
+            !Number.isInteger(course.course_credits) ||
+            course.course_credits < 1 ||
+            course.course_credits > 10 ||
+            !Number.isInteger(course.semester) ||
+            course.semester < 1 ||
+            course.semester > 8
+        ) {
+            showMessage("Please enter valid details in all required fields.", "error");
+            return;
+        }
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Saving Course...";
+
+        try {
+            const response = await fetch("/api/courses", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(course)
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    result.message ||
+                    result.error ||
+                    "Unable to save the course. Check your server and database."
+                );
+            }
+
+            showMessage(
+                result.message || "Course added successfully!",
+                "success"
+            );
+
+            form.reset();
+
+        } catch (error) {
+            console.error("Add course error:", error);
+
+            showMessage(
+                error.message || "Unable to connect to the server.",
+                "error"
+            );
+
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = "+ Add Course";
+        }
+    });
+
+    function showMessage(text, type) {
+        message.textContent = text;
+        message.className = "message " + type;
+        message.style.display = "block";
+    }
+</script>
+
+</body>
+</html>

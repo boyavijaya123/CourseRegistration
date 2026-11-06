@@ -1,0 +1,724 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Courses | CampusCourse</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f3f7f4;
+            color: #243b32;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .navbar {
+            min-height: 82px;
+            padding: 18px 6%;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 23px;
+            font-weight: bold;
+            color: #14583f;
+        }
+
+        .brand-icon {
+            padding: 12px;
+            border-radius: 12px;
+            background: #14583f;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #344b40;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #13845b;
+        }
+
+        .hero {
+            min-height: 280px;
+            padding: 55px 8%;
+            display: flex;
+            align-items: center;
+            background-color: #153f2f;
+            background-image:
+                linear-gradient(90deg, rgba(8, 35, 25, 0.91),
+                rgba(8, 35, 25, 0.40)),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85");
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 750px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 8px 14px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 4vw, 48px);
+            margin-bottom: 14px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            max-width: 650px;
+            color: #edf4ef;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1350px;
+            margin: 45px auto 65px;
+        }
+
+        .heading {
+            margin-bottom: 28px;
+        }
+
+        .heading span {
+            color: #13845b;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .heading h2 {
+            color: #173f2f;
+            font-size: 32px;
+            margin: 10px 0;
+        }
+
+        .heading p {
+            color: #718078;
+            line-height: 1.7;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 23px;
+            border-radius: 12px;
+            border: 1px solid #e4ebe6;
+            box-shadow: 0 4px 15px rgba(20, 60, 40, 0.04);
+        }
+
+        .stat-card p {
+            color: #718078;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card h3 {
+            font-size: 30px;
+            color: #14583f;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid #e2ebe4;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 6px 22px rgba(20, 60, 40, 0.05);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .panel-header h3 {
+            color: #173f2f;
+            font-size: 22px;
+        }
+
+        .add-button {
+            display: inline-block;
+            background: #14583f;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .add-button:hover {
+            background: #0d704b;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            min-width: 0;
+            padding: 12px 13px;
+            border: 1px solid #d7e2da;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #fbfdfb;
+            color: #344b40;
+            outline: none;
+        }
+
+        .filters input:focus,
+        .filters select:focus {
+            border-color: #16805a;
+            box-shadow: 0 0 0 3px rgba(22, 128, 90, 0.10);
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        thead {
+            background: #edf5ef;
+        }
+
+        th, td {
+            padding: 16px 14px;
+            text-align: left;
+            border-bottom: 1px solid #e7eee8;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        th {
+            color: #315342;
+            font-weight: bold;
+        }
+
+        td {
+            color: #52645a;
+        }
+
+        tbody tr:hover {
+            background: #f8fbf8;
+        }
+
+        .course-code {
+            color: #14724f;
+            font-weight: bold;
+        }
+
+        .department-badge {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 6px;
+            background: #e7f4ec;
+            color: #14724f;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .edit-button,
+        .delete-button {
+            padding: 8px 11px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .edit-button {
+            background: #e5efff;
+            color: #2359a8;
+        }
+
+        .edit-button:hover {
+            background: #d3e3ff;
+        }
+
+        .delete-button {
+            background: #ffebe9;
+            color: #b52f29;
+        }
+
+        .delete-button:hover {
+            background: #ffdad6;
+        }
+
+        .status-message {
+            display: none;
+            margin-bottom: 18px;
+            padding: 13px 15px;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+
+        .status-message.success {
+            display: block;
+            color: #17633e;
+            background: #e6f5eb;
+        }
+
+        .status-message.error {
+            display: block;
+            color: #a42b24;
+            background: #fff0ee;
+        }
+
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 35px 15px;
+            color: #718078;
+        }
+
+        .empty-state h3 {
+            color: #254736;
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            background: #123c2c;
+            color: #e4eee8;
+            text-align: center;
+            padding: 28px 15px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 850px) {
+            .filters {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .filters input {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 18px 5%;
+            }
+
+            .nav-links {
+                gap: 13px;
+            }
+
+            .container {
+                width: 92%;
+                margin-top: 30px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .filters input {
+                grid-column: auto;
+            }
+
+            .panel {
+                padding: 17px;
+            }
+
+            .heading h2 {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="/index.html" class="brand">
+            <span class="brand-icon">C</span>
+            <span>CampusCourse</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="/index.html">Home</a>
+            <a href="/courses.html">View Courses</a>
+            <a href="/add-course.html">Add Course</a>
+            <a href="/manage-courses.html">Manage Courses</a>
+            <a href="/register.html">Register</a>
+            <a href="/admin-login.html">Admin Login</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="eyebrow">ADMINISTRATION DASHBOARD</span>
+            <h1>Manage College Courses</h1>
+            <p>
+                View course information, find subjects quickly, update course
+                details, and remove courses that are no longer offered.
+            </p>
+        </div>
+    </section>
+
+    <main class="container">
+
+        <div class="heading">
+            <span>COURSE MANAGEMENT</span>
+            <h2>Course Catalogue</h2>
+            <p>Manage course codes, names, credits, departments, and semesters.</p>
+        </div>
+
+        <section class="stats">
+            <div class="stat-card">
+                <p>Total Courses</p>
+                <h3 id="totalCourses">—</h3>
+            </div>
+
+            <div class="stat-card">
+                <p>Departments Represented</p>
+                <h3 id="totalDepartments">—</h3>
+            </div>
+
+            <div class="stat-card">
+                <p>Total Course Credits</p>
+                <h3 id="totalCredits">—</h3>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h3>All Courses</h3>
+                <a href="/add-course.html" class="add-button">+ Add New Course</a>
+            </div>
+
+            <div id="statusMessage" class="status-message" role="status"></div>
+
+            <div class="filters">
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search by course name, code, or ID..."
+                    aria-label="Search courses"
+                >
+
+                <select id="departmentFilter" aria-label="Filter department">
+                    <option value="">All Departments</option>
+                    <option value="CSE">CSE</option>
+                    <option value="IT">IT</option>
+                    <option value="ECE">ECE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="MECH">MECH</option>
+                    <option value="CIVIL">CIVIL</option>
+                </select>
+
+                <select id="semesterFilter" aria-label="Filter semester">
+                    <option value="">All Semesters</option>
+                    <option value="1">Semester 1</option>
+                    <option value="2">Semester 2</option>
+                    <option value="3">Semester 3</option>
+                    <option value="4">Semester 4</option>
+                    <option value="5">Semester 5</option>
+                    <option value="6">Semester 6</option>
+                    <option value="7">Semester 7</option>
+                    <option value="8">Semester 8</option>
+                </select>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Course ID</th>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Credits</th>
+                            <th>Department</th>
+                            <th>Semester</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody">
+                        <tr>
+                            <td colspan="7">Loading courses...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="emptyState" class="empty-state">
+                <h3>No courses found</h3>
+                <p>Try another search or add a course to the catalogue.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p><strong>CampusCourse</strong> — Student Course Registration System</p>
+        <p>Keeping academic information organised.</p>
+    </footer>
+
+    <script>
+        const tableBody = document.getElementById("courseTableBody");
+        const searchInput = document.getElementById("searchInput");
+        const departmentFilter = document.getElementById("departmentFilter");
+        const semesterFilter = document.getElementById("semesterFilter");
+        const emptyState = document.getElementById("emptyState");
+        const statusMessage = document.getElementById("statusMessage");
+
+        let allCourses = [];
+
+        function getField(course, names) {
+            for (const name of names) {
+                if (course[name] !== undefined && course[name] !== null) {
+                    return course[name];
+                }
+            }
+            return "";
+        }
+
+        function escapeHTML(value) {
+            return String(value).replace(/[&<>"']/g, character => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            })[character]);
+        }
+
+        function showMessage(text, type) {
+            statusMessage.textContent = text;
+            statusMessage.className = "status-message " + type;
+
+            window.setTimeout(() => {
+                statusMessage.className = "status-message";
+                statusMessage.textContent = "";
+            }, 5000);
+        }
+
+        function updateStatistics(courses) {
+            document.getElementById("totalCourses").textContent = courses.length;
+
+            const departments = new Set(
+                courses.map(course =>
+                    String(getField(course, ["department", "dept"])).trim()
+                ).filter(Boolean)
+            );
+
+            const credits = courses.reduce((sum, course) => {
+                return sum + (Number(
+                    getField(course, ["credits", "course_credits", "courseCredits"])
+                ) || 0);
+            }, 0);
+
+            document.getElementById("totalDepartments").textContent =
+                departments.size;
+            document.getElementById("totalCredits").textContent = credits;
+        }
+
+        function renderCourses() {
+            const search = searchInput.value.trim().toLowerCase();
+            const department = departmentFilter.value.toLowerCase();
+            const semester = semesterFilter.value;
+
+            const filtered = allCourses.filter(course => {
+                const id = getField(course, ["course_id", "id"]);
+                const code = getField(course, ["course_code", "courseCode", "code"]);
+                const name = getField(course, ["course_name", "courseName", "name"]);
+                const dept = getField(course, ["department", "dept"]);
+                const sem = getField(course, ["semester", "semister", "sem"]);
+
+                const text = `${id} ${code} ${name} ${dept}`.toLowerCase();
+
+                return text.includes(search) &&
+                    (!department || String(dept).toLowerCase() === department) &&
+                    (!semester || String(sem) === semester);
+            });
+
+            tableBody.innerHTML = "";
+            emptyState.style.display = filtered.length ? "none" : "block";
+
+            if (!filtered.length) {
+                tableBody.innerHTML =
+                    '<tr><td colspan="7">No matching courses.</td></tr>';
+                return;
+            }
+
+            filtered.forEach(course => {
+                const id = getField(course, ["course_id", "id"]);
+                const code = getField(course, ["course_code", "courseCode", "code"]);
+                const name = getField(course, ["course_name", "courseName", "name"]);
+                const credits = getField(course, ["credits", "course_credits", "courseCredits"]);
+                const dept = getField(course, ["department", "dept"]);
+                const sem = getField(course, ["semester", "semister", "sem"]);
+
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${escapeHTML(id)}</td>
+                    <td class="course-code">${escapeHTML(code)}</td>
+                    <td>${escapeHTML(name)}</td>
+                    <td>${escapeHTML(credits)}</td>
+                    <td><span class="department-badge">${escapeHTML(dept)}</span></td>
+                    <td>${escapeHTML(sem)}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="edit-button" type="button">Edit</button>
+                            <button class="delete-button" type="button">Delete</button>
+                        </div>
+                    </td>
+                `;
+
+                row.querySelector(".edit-button").addEventListener("click", () => {
+                    // Pass the selected course ID to the update page.
+                    window.location.href =
+                        "/update-course.html?id=" + encodeURIComponent(id);
+                });
+
+                row.querySelector(".delete-button").addEventListener("click", () => {
+                    deleteCourse(id, name);
+                });
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function loadCourses() {
+            tableBody.innerHTML =
+                '<tr><td colspan="7">Loading courses...</td></tr>';
+
+            try {
+                const response = await fetch("/api/courses");
+
+                if (!response.ok) {
+                    throw new Error("Server returned status " + response.status);
+                }
+
+                const courses = await response.json();
+
+                if (!Array.isArray(courses)) {
+                    throw new Error("The courses API did not return a list.");
+                }
+
+                allCourses = courses;
+                updateStatistics(allCourses);
+                renderCourses();
+
+            } catch (error) {
+                console.error("Unable to load courses:", error);
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7">
+                            Could not load courses. Check your Express server,
+                            database connection, and GET /api/courses route.
+                        </td>
+                    </tr>
+                `;
+                showMessage(error.message, "error");
+            }
+        }
+
+        async function deleteCourse(id, name) {
+            const confirmed = window.confirm(
+                `Are you sure you want to delete "${name}" (Course ID: ${id})?`
+            );
+
+            if (!confirmed) return;
+
+            try {
+                const response = await fetch(
+                    "/api/courses/" + encodeURIComponent(id),
+                    { method: "DELETE" }
+                );
+
+                const result = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                    throw new Error(result.message || result.error ||
+                        "The course could not be deleted.");
+                }
+
+                showMessage("Course deleted successfully.", "success");
+                await loadCourses();
+
+            } catch (error) {
+                console.error("Delete failed:", error);
+                showMessage(error.message, "error");
+            }
+        }
+
+        searchInput.addEventListener("input", renderCourses);
+        departmentFilter.addEventListener("change", renderCourses);
+        semesterFilter.addEventListener("change", renderCourses);
+
+        loadCourses();
+    </script>
+
+</body>
+</html>
